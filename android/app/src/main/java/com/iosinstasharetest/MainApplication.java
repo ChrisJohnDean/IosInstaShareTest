@@ -3,11 +3,14 @@ package com.iosinstasharetest;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.reactlibrary.RNIosInstaSharePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
+            new ImagePickerPackage(),
             new RNIosInstaSharePackage()
       );
     }
@@ -33,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
       return "index";
     }
   };
+
 
   @Override
   public ReactNativeHost getReactNativeHost() {

@@ -9,6 +9,8 @@
   "dependencies": {
     "react": "16.4.1",
     "react-native": "0.56.0",
+    "react-native-fs": "^2.10.14",
+    "react-native-image-picker": "^0.26.10",
     "react-native-ios-insta-share": "../IosInstaShare"
   },
   "devDependencies": {

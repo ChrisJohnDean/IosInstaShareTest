@@ -1,6 +1,7 @@
 package com.iosinstasharetest;
 
 import com.facebook.react.ReactActivity;
+import com.reactlibrary.RNIosInstaSharePackage;
 
 public class MainActivity extends ReactActivity {
 
