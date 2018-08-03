@@ -11,7 +11,8 @@
     "react-native": "0.56.0",
     "react-native-fs": "^2.10.14",
     "react-native-image-picker": "^0.26.10",
-    "react-native-ios-insta-share": "../IosInstaShare"
+    "react-native-ios-insta-share": "../IosInstaShare",
+    "rn-fetch-blob": "^0.10.12"
   },
   "devDependencies": {
     "babel-jest": "23.4.0",
