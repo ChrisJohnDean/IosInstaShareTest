@@ -23,9 +23,19 @@ var RNFS = require("react-native-fs");
 type Props = {};
 export default class App extends Component<Props> {
   getFileName(name: string) {
-    const FILE = Platform.OS === "ios" ? "" : "file://";
-    // return FILE + RNFS.DocumentDirectoryPath + "/" + name + ".jpg";
-    return FILE + RNFS.ExternalStorageDirectoryPath + "/" + name + ".jpg";
+    const FULLPATH =
+      Platform.OS === "ios"
+        ? RNFS.DocumentDirectoryPath + "/" + name + ".ig"
+        : "file://" + RNFS.ExternalStorageDirectoryPath + "/" + name + ".jpg";
+    return FULLPATH;
+    // return (
+    //   FILE +
+    //   RNFS.DocumentDirectoryPath +
+    //   "/" +
+    //   name +
+    //   ".jpg"  +
+    // "Image.ig"
+    // );
   }
 
   deleteFile(path: string) {
@@ -53,19 +63,18 @@ export default class App extends Component<Props> {
           console.log("reponse is true");
           return { uri: fileName };
         } else {
-          let destination_path = "/" + name + ".jpg";
+          const FULLPATH =
+            Platform.OS === "ios"
+              ? RNFS.DocumentDirectoryPath + "/" + name + ".ig"
+              : RNFS.ExternalStorageDirectoryPath + "/" + name + ".jpg";
           console.log("response is false");
           return RNFS.downloadFile({
             fromUrl: source_url,
-            toFile: RNFS.ExternalStorageDirectoryPath + destination_path
+            toFile: FULLPATH
           })
             .promise.then(response => {
-              const param =
-                Platform.OS === "ios"
-                  ? source_url
-                  : RNFS.ExternalStorageDirectoryPath + destination_path;
               RNIosInstaShare.createPost(
-                GOOGLE_ICON,
+                FULLPATH,
                 res => {
                   console.log(res);
                   this.directoryList();
@@ -92,31 +101,31 @@ export default class App extends Component<Props> {
     );
   }
 
-  urlToBase64(source_url: string) {
-    RNFetchBlob.config({ fileCache: false })
-      .fetch("GET", source_url)
-      .then(resp => {
-        return resp.readFile("base64").then(base64 => {
-          return { resp, base64 };
-        });
-      })
-      .then(obj => {
-        var headers = obj.resp.respInfo.headers;
-        var type = headers["Content-Type"];
-        var dataUrl = "data:" + type + ";base64," + obj.base64;
-        RNIosInstaShare.createPost(
-          dataUrl,
-          res => {
-            this.directoryList();
-            console.log("here: " + dataUrl);
-          } // callback function return result `true` if user have instagram app and can create post
-        );
-        return { url: dataUrl };
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  // urlToBase64(source_url: string) {
+  //   RNFetchBlob.config({ fileCache: false })
+  //     .fetch("GET", source_url)
+  //     .then(resp => {
+  //       return resp.readFile("base64").then(base64 => {
+  //         return { resp, base64 };
+  //       });
+  //     })
+  //     .then(obj => {
+  //       var headers = obj.resp.respInfo.headers;
+  //       var type = headers["Content-Type"];
+  //       var dataUrl = "data:" + type + ";base64," + obj.base64;
+  //       RNIosInstaShare.createPost(
+  //         dataUrl,
+  //         res => {
+  //           this.directoryList();
+  //           console.log("here: " + dataUrl);
+  //         } // callback function return result `true` if user have instagram app and can create post
+  //       );
+  //       return { url: dataUrl };
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 
   // Use this to check which files are in the Document Directory, for android we are using this one
   // I believe: RNFS.readDir(RNFS.ExternalStorageDirectoryPath)
@@ -171,13 +180,13 @@ export default class App extends Component<Props> {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            this.urlToBase64(
-              "http://www.knowahead.in/wp-content/uploads/2012/04/google-plus-vanity-URL.jpg"
-            );
-            // this.downloadAndGetImageUrl(
-            //   "sharedImageEight",
+            // this.urlToBase64(
             //   "http://www.knowahead.in/wp-content/uploads/2012/04/google-plus-vanity-URL.jpg"
             // );
+            this.downloadAndGetImageUrl(
+              "sharedImageEight",
+              "https://dbl4hsd8tfgwq.cloudfront.net/telusproduction/5a73be5f2d6d2_i_480x688.jpg"
+            );
           }}
         >
           <View style={styles.instructions}>
